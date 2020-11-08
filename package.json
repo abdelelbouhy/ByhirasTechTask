@@ -1,0 +1,44 @@
+{
+  "name": "techtask",
+  "version": "1.0.0",
+  "description": "Dice roller game",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start:dev": "run-p start:dev:*",
+    "start:dev:server": "nodemon --exec babel-node ./src/server/index.js",
+    "start:dev:client": "webpack-dev-server",
+    "build": "webpack",
+    "start": "npm i && webpack && npm run test && npm run start:dev"
+  },
+  "author": "Abdel Elbouhy",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-react": "^7.12.5",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-react": "^7.21.5",
+    "nodemon": "^2.0.6",
+    "npm-run-all": "^4.1.5",
+    "redux-devtools-extension": "^2.13.8",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "write-file-webpack-plugin": "^4.5.1"
+  }
+}
