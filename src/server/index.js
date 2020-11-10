@@ -2,23 +2,54 @@ import express from 'express';
 import path from 'path';
 import ejs from 'ejs';
 import bodyParser from 'body-parser';
+import { merge } from "lodash";
 import * as childProcess from 'child_process';
 import { ApolloServer, gql } from 'apollo-server-express';
 import { mergeTypes } from 'merge-graphql-schemas';
-import Users from './data/users';
+import importAllFrom from 'import-all-from';
+import users from './data/users';
 import Addresses from './data/address';
 import userSchema from './schema/user';
 import addressSchema from './schema/address';
 const app = express();
 
-const resolvers = {
+const uerResolver = {
   Query: {
-    users: () => Users,
+    users: () => users,
+    user(parent, args, context, info) {
+      return {
+        ...users.find(user => user.name === args.name), 
+        address: {line1: Addresses.find(address => address.name === args.name).address
+        }
+      };
+    }
+  },
+
+  Mutation: {
+    addUser: (parent, {name, age}) => {
+      users.push({name, age});
+      return {name, age}
+    }
+  }
+};
+
+const addressResolver = {
+  Query: {
+    users: () => Addresses,
   },
 };
 
+const resolvers = merge({}, uerResolver, addressResolver);
 
-const server = new ApolloServer({ typeDefs: userSchema, resolvers, playground: true });
+// const schemas = importAllFrom(path.join(__dirname, '/schema'));
+
+// console.log(schemas)
+
+
+const schema = mergeTypes([userSchema, addressSchema], { all: true });
+
+
+const server = new ApolloServer({ typeDefs: schema, resolvers, playground: true });
 server.applyMiddleware({ app });
 
 

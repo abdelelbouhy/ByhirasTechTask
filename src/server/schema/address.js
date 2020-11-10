@@ -1,9 +1,10 @@
 import {gql} from 'apollo-server';
 
 export default gql`
-    type Adress {
+    type Address {
         name: String!
-        address: String!
+        line1: String!
+        user: User
     }
 
     type Query {
