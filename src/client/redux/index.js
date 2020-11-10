@@ -1,12 +1,17 @@
   
-const DiceRoller = (state = {}, action) => {
+const diceRoller = (state = {}, action) => {
 
     switch (action.type) {
         case 'IS_ROLLING':
             return {
                 ...state,
-                ...action.payload.data,
-                isRolling: faltrue,
+                diceIsRolling: action.value,
+            };
+        case 'SET_DICE_TOTAL':
+            const {name, total} = action.payload;
+            return {
+                ...state,
+               [name]: total,
             };
         default:
             return state;
@@ -14,7 +19,7 @@ const DiceRoller = (state = {}, action) => {
 };
 
 const reducers = {
-    DiceRoller,
+    diceRoller,
 };
 
 export default reducers;
