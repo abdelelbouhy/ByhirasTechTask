@@ -1,34 +1,12 @@
 import express from 'express';
 import path from 'path';
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer, gql } from 'apollo-server-express';
 import { mergeTypes } from 'merge-graphql-schemas';
 import Users from './data/users';
 import Addresses from './data/address';
 import userSchema from './schema/user';
 import addressSchema from './schema/address';
 const app = express();
-
-const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
-
-  type Query {
-    books: [Book]
-  }
-`;
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
 
 const resolvers = {
   Query: {
@@ -37,9 +15,7 @@ const resolvers = {
 };
 
 
-const server = new ApolloServer({ typeDefs: userSchema, resolvers });
+const server = new ApolloServer({ typeDefs: userSchema, resolvers, playground: true });
+server.applyMiddleware({ app });
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+app.listen({ port: 3000 }, () => console.log('port 30000'))

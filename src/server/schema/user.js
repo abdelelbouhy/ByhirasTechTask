@@ -10,14 +10,3 @@ export default gql`
         users: [User]
     }
 `;
-
-// export default gql`
-//     type User {
-//         title: String
-//         author: String
-//     }
-
-//     type Query {
-//         users: [User]
-//     }
-// `;
